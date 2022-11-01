@@ -12,6 +12,9 @@ function App() {
     const getUsers = async () => {
       const data = await getDocs(userCollectionRef);
       console.log(data);
+      setUsers(data.docs.map(()=>{
+        
+      }))
     };
     getUsers()
   }, [])
