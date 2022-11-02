@@ -8,13 +8,13 @@ function App() {
   const [users, setUsers] = useState([]);
   const userCollectionRef = collection(db, "users")//from which collection you want data from?
   useEffect(() => {
-
     const getUsers = async () => {
       const data = await getDocs(userCollectionRef);
       console.log(data);
-      setUsers(data.docs.map(()=>{
-
-      }))
+      setUsers(data.docs.map((doc) => ({
+        ...doc.data(), id: doc.id
+      })))
+      console.log(users);
     };
     getUsers()
   }, [])
