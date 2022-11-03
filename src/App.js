@@ -10,11 +10,9 @@ function App() {
   useEffect(() => {
     const getUsers = async () => {
       const data = await getDocs(userCollectionRef);
-      console.log(data);
-      setUsers(data.docs.map((doc) => ({
-        ...doc.data(), id: doc.id
-      })))
-      console.log(users);
+      console.log("Data Docs", data.docs);
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      console.log("Users", users);
     };
     getUsers()
   }, [])
