@@ -12,6 +12,7 @@ function App() {
       const data = await getDocs(userCollectionRef);
       console.log("Data Docs", data.docs);
       setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      // setUsers(data.docs.map((x) => ({ ...x.data(), id: x.id })))
       console.log("Users", users);
     };
     
