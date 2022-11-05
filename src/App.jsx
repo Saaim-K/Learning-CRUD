@@ -34,6 +34,7 @@ function App() {
       console.log("Users", users);
     };
 
+    
     getUsers()
 
   }, [])
