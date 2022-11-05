@@ -10,19 +10,7 @@ function App() {
   const [newAge, setNewAge] = useState(0);
   const userCollectionRef = collection(db, "users")//from which collection you want data from?
 
-  // Add a new document in collection "users"
-  const createUser = async () => {
-    await addDoc(userCollectionRef, { name: newName, age: newAge })
-  }
 
-  const deleteAge = async (doc) => {
-    // await deleteDoc(doc(db, "users" ));
-    // console.log(doc.id);
-  }
-
-
-
-  const updateAge = async () => { }
 
   useEffect(() => {
     const getUsers = async () => {
@@ -38,17 +26,45 @@ function App() {
   }, [])
 
 
+  // ---------------------------------------- Create User ----------------------------------------
+  const createUser = async () => {
+    await addDoc(userCollectionRef, { name: newName, age: Number(newAge) })
+  }
+  // ---------------------------------------- Create User ----------------------------------------
+
+
+  // ---------------------------------------- Delete User ----------------------------------------
+  const deleteAge = async (doc) => {
+  }
+  // ---------------------------------------- Delete User ----------------------------------------
+
+
+  // ---------------------------------------- Update User ----------------------------------------
+  const updateAge = async () => {
+
+  }
+  // ---------------------------------------- Update User ----------------------------------------
+
+
+
   return (
     <>
+
+      {/* ---------------------------------------- Form ---------------------------------------- */}
       <input type="text" placeholder='Name...' onChange={(e) => { setNewName(e.target.value) }} />
       <input type="number" placeholder='Age...' onChange={(e) => { setNewAge(e.target.value) }} />
       <button onClick={createUser}>Create User</button>
+      {/* ---------------------------------------- Form ---------------------------------------- */}
+
+      
+      {/* ---------------------------------------- Displayed Div ---------------------------------------- */}
       {users.map((users, i) => (
         <div key={i}>
           <h1>Name : {users.name}</h1>
           <h1>Age : {users.age} <button onClick={updateAge}>UPDATE</button> <button onClick={deleteAge}>DELETE</button></h1>
         </div>
       ))}
+      {/* ---------------------------------------- Displayed Div ---------------------------------------- */}
 
     </>
   );
