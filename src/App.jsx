@@ -33,8 +33,6 @@ function App() {
       //loop through each docs and for each docs i.e 'x' as parameter, get x.data
       console.log("Users", users);
     };
-
-    
     getUsers()
 
   }, [])
