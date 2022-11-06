@@ -1,6 +1,6 @@
 import './App.css';
 import { db } from './firebase-config'
-import moment from 'moment/moment'; 
+import moment from 'moment/moment';
 import { useEffect, useState } from 'react';
 import { collection, doc, getDocs, addDoc, deleteDoc, onSnapshot, query } from 'firebase/firestore';
 
@@ -60,7 +60,8 @@ function App() {
 
 
   // ---------------------------------------- Create User ----------------------------------------
-  const addUser = async () => {
+  const addUser = async (e) => {
+    e.preventDefault();
     await addDoc(userCollectionRef,
       {
         name: newName,
@@ -93,9 +94,11 @@ function App() {
     <>
 
       {/* ---------------------------------------- Form ---------------------------------------- */}
-      <input type="text" placeholder='Name...' onChange={(e) => { setNewName(e.target.value) }} />
-      <input type="number" placeholder='Age...' onChange={(e) => { setNewAge(e.target.value) }} />
-      <button onClick={addUser}>Create User</button>
+      <form onSubmit={addUser}>
+        <input type="text" placeholder='Name...' onChange={(e) => { setNewName(e.target.value) }} />
+        <input type="number" placeholder='Age...' onChange={(e) => { setNewAge(e.target.value) }} />
+        <button>Create User</button>
+      </form>
       {/* ---------------------------------------- Form ---------------------------------------- */}
 
 
