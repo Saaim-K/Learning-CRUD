@@ -108,7 +108,7 @@ function App() {
         <div key={i}>
           <h3>Name : {users.name}</h3>
           <h3>Age : {users.age} </h3>
-          <h3>{moment((users.createdOn?.seconds) ? users.createdOn?.seconds * 1000 : undefined).format('Do MMMM, h:mm a')}</h3>
+          <h3>{moment((users.createdOn.seconds) ? users.createdOn.seconds * 1000 : undefined).format('Do MMMM, h:mm a')}</h3>
           {/* <h4>Date : {moment((users.createdOn)) ? users.createdOn.fromNow('ss'):undefined} </h4> */}
           <h4>ID : {users.id} </h4>
           <button onClick={updateAge}>UPDATE</button>
