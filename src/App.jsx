@@ -2,7 +2,7 @@ import './App.css';
 import { db } from './firebase-config'
 import moment from 'moment/moment';
 import { useEffect, useState } from 'react';
-import { collection, doc, getDocs, addDoc, deleteDoc, onSnapshot, query } from 'firebase/firestore';
+import { collection, doc, getDocs, addDoc, deleteDoc, onSnapshot, query, serverTimestamp, orderBy } from 'firebase/firestore';
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -36,7 +36,7 @@ function App() {
     // ---------------------------------------- Getting Real Time Data From Firebase ----------------------------------------
     let unsubscribe;
     const realTimeData = () => {
-      const q = query(userCollectionRef);
+      const q = query(userCollectionRef, orderBy("createdOn", "desc"));
       unsubscribe = onSnapshot(q, realData => {
         // -------------------- Populating Users State with Data from Database --------------------
         setUsers(realData.docs.map((getData) => ({ ...getData.data(), id: getData.id })))
@@ -66,7 +66,8 @@ function App() {
       {
         name: newName,
         age: Number(newAge),
-        createdOn: new Date().getTime()
+        // createdOn: new Date().getTime()
+        createdOn: serverTimestamp()
       });
   }
   // ---------------------------------------- Create User ----------------------------------------
@@ -107,7 +108,8 @@ function App() {
         <div key={i}>
           <h3>Name : {users.name}</h3>
           <h3>Age : {users.age} </h3>
-          <h4>Date : {moment(users.createdOn).fromNow('ss')} </h4>
+          <h3>{moment((users.createdOn?.seconds) ? users.createdOn?.seconds * 1000 : undefined).format('Do MMMM, h:mm a')}</h3>
+          {/* <h4>Date : {moment((users.createdOn)) ? users.createdOn.fromNow('ss'):undefined} </h4> */}
           <h4>ID : {users.id} </h4>
           <button onClick={updateAge}>UPDATE</button>
           <button onClick={() => { deleteUser(users.id); }}>DELETE</button>
