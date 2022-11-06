@@ -17,27 +17,30 @@ function App() {
 
   // ---------------------------------------- Getting Data From Firebase ----------------------------------------
   useEffect(() => {
-    const getUsers = async () => {
+    const getUserData = async () => {
       const data = await getDocs(userCollectionRef);
       console.log("Data Docs", data.docs);
 
       // -------------------- Populating Users State with Data from Database --------------------
       setUsers(data.docs.map((getData) => ({ ...getData.data(), id: getData.id })));
-      // setUsers(data.docs.map((x) => ({ ...x.data(), id: x.id })))
-      //loop through each docs and for each docs i.e 'x' as parameter, get x.data
       console.log("Users", users);
       // -------------------- Populating Users State with Data from Database --------------------
-
+      
     };
-    getUsers()
+    getUserData()
 
   }, [])
   // ---------------------------------------- Getting Data From Firebase ----------------------------------------
 
 
   // ---------------------------------------- Create User ----------------------------------------
-  const createUser = async () => {
-    await addDoc(userCollectionRef, { name: newName, age: Number(newAge) })
+  const addUser = async () => {
+    await addDoc(userCollectionRef,
+      { 
+        name: newName,
+        age: Number(newAge),
+        createdOn: new Date().getTime()
+      });
   }
   // ---------------------------------------- Create User ----------------------------------------
 
@@ -66,7 +69,7 @@ function App() {
       {/* ---------------------------------------- Form ---------------------------------------- */}
       <input type="text" placeholder='Name...' onChange={(e) => { setNewName(e.target.value) }} />
       <input type="number" placeholder='Age...' onChange={(e) => { setNewAge(e.target.value) }} />
-      <button onClick={createUser}>Create User</button>
+      <button onClick={addUser}>Create User</button>
       {/* ---------------------------------------- Form ---------------------------------------- */}
 
 
@@ -75,6 +78,8 @@ function App() {
         <div key={i}>
           <h1>Name : {users.name}</h1>
           <h1>Age : {users.age} </h1>
+          <h4>Date : {users.createdOn} </h4>
+          <h4>ID : {users.id} </h4>
           <button onClick={updateAge}>UPDATE</button>
           <button onClick={() => { deleteUser(users.id); }}>DELETE</button>
         </div>
