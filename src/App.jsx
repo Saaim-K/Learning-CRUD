@@ -77,8 +77,8 @@ function App() {
   const deleteUser = async (id) => {
     //To get a specific document from a collection in database,
     //we use docdoc(db, "users", id); where id tells which document we are talking about
-    const userDoc = doc(db, "users", id);
-    await deleteDoc(userDoc);
+    const deletedDoc = doc(db, "users", id);
+    await deleteDoc(deletedDoc);
   };
   // ---------------------------------------- Delete User ----------------------------------------
 
@@ -108,8 +108,14 @@ function App() {
         <div key={i}>
           <h3>Name : {users.name}</h3>
           <h3>Age : {users.age} </h3>
-          <h3>{moment((users.createdOn.seconds) ? users.createdOn.seconds * 1000 : undefined).format('Do MMMM, h:mm a')}</h3>
-          {/* <h4>Date : {moment((users.createdOn)) ? users.createdOn.fromNow('ss'):undefined} </h4> */}
+
+          {/* <h4>Date {moment((users.createdOn) ? users.createdOn : undefined).fromNow('s')}:</h4> */}
+          <span>{
+            moment((users.createdOn) ? users.createdOn.seconds * 1000 : undefined).format('Do MMMM, h:mm a')
+          }</span>
+
+
+
           <h4>ID : {users.id} </h4>
           <button onClick={updateAge}>UPDATE</button>
           <button onClick={() => { deleteUser(users.id); }}>DELETE</button>
