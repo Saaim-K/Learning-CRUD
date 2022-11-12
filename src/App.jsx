@@ -53,7 +53,6 @@ function App() {
       unsubscribe();
     }
 
-
   }, [])
 
   // ---------------------------------------- UseEffect Hook ----------------------------------------
@@ -76,7 +75,7 @@ function App() {
   // ---------------------------------------- Delete User ----------------------------------------
   const deleteUser = async (id) => {
     //To get a specific document from a collection in database,
-    //we use docdoc(db, "users", id); where id tells which document we are talking about
+    //we use doc(db, "users", id); where id tells which document we are talking about
     const deletedDoc = doc(db, "users", id);
     await deleteDoc(deletedDoc);
   };
@@ -84,7 +83,11 @@ function App() {
 
 
   // ---------------------------------------- Update User ----------------------------------------
-  const updateAge = async () => {
+  const updateAge = async (id, updatedName) => {
+    const updateDoc = doc(db, "users", id);
+    await updateDoc(updateDoc, {
+      name: updatedName
+    });
 
   }
   // ---------------------------------------- Update User ----------------------------------------
@@ -117,11 +120,30 @@ function App() {
 
 
           <h4>ID : {users.id} </h4>
-          <button onClick={updateAge}>UPDATE</button>
+          {/* <button onClick={()={
+            const updatedState=users.map((eachUsers)=>{
+              if(eachUsers.id===users.id){
+            return{...eachUsers,isEditing:true}}
+            else{
+              return eachUsers
+            }
+            })>UPDATE</button> */}
+            <button onClick={
+                  ()=>{
+                    const updatedState=users.map(eachItem=>{
+                      if(eachItem.id===users.id){
+                        return{...eachItem,isEditing:true}
+                      }
+                      else{return eachItem}
+                    })
+                    setNewName(updatedState)
+                  }
+            }></button>
           <button onClick={() => { deleteUser(users.id); }}>DELETE</button>
         </div>
-      ))}
-      {/* ---------------------------------------- Displayed Div ---------------------------------------- */}
+  ))
+}
+{/* ---------------------------------------- Displayed Div ---------------------------------------- */ }
 
     </>
   );
